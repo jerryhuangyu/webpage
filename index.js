@@ -1,6 +1,6 @@
 let player = {
     name: "Tommy",
-    chips: 20,
+    chips: 40,
     hasBlackJack: false,
     hasMoney: true,
     isAlive: false
@@ -9,7 +9,6 @@ let firstCard
 let secondCard
 let sum = 0
 let cards = []
-
 
 let playerEl = document.getElementById('player-el')
 let messageEl = document.getElementById('message-el')
@@ -43,9 +42,7 @@ function renderGame(){
     }
     cardEl.textContent = cardMsg
 
-    if(!player.hasMoney){
-        infoMsg = "Get out! you dummy... 👋"
-    }else if(cards.length<5){
+    if(cards.length<5){
         if(sum<21){
             infoMsg = "Do you wnat to draw a new card? 😉"
         }else if(sum===21){
@@ -96,7 +93,7 @@ function getRandomCard(){
 
 function checkPlayerMoney(){
     if(player.chips<0.1){
-        let infoMsg = "Get out you poor... 👋"
+        let infoMsg = "Get out you dummy... 👋"
         messageEl.textContent = infoMsg
         player.hasMoney = false
         player.isAlive = false
