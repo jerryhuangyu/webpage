@@ -9,6 +9,7 @@ let firstCard
 let secondCard
 let sum = 0
 let cards = []
+let infoMsg = ""
 
 let playerEl = document.getElementById('player-el')
 let messageEl = document.getElementById('message-el')
@@ -18,6 +19,7 @@ let cardEl = document.querySelector('.cards-el')
 playerEl.textContent = player.name + ": $" + player.chips
 
 function startGame(){
+    checkPlayerMoney()
     if(player.hasMoney){
         player.chips -= 5
         player.isAlive = true
@@ -36,7 +38,6 @@ function startGame(){
 
 function renderGame(){
     let cardMsg = "Card: "
-    let infoMsg = ""
     for(let i=0; i<cards.length; i++){
         cardMsg = cardMsg + " " + cards[i]
     }
@@ -50,9 +51,7 @@ function renderGame(){
             player.hasBlackJack = true
             player.chips += 15
         }else{
-            infoMsg = "You're out of the game... 😖"
-            player.isAlive = false
-            player.chips -= 5
+            outOfGame()
         }
     }else{
         if(sum<21){
@@ -60,14 +59,12 @@ function renderGame(){
             player.hasBlackJack = true
             player.chips += 15
         }else{
-            infoMsg = "You're out of the game... 😖"
-            player.isAlive = false
-            player.chips -= 5
+            outOfGame()
         }
     }
     messageEl.textContent = infoMsg
     playerEl.textContent = player.name + ": $" + player.chips
-    checkPlayerMoney()
+
 }
 
 function addCard(){
@@ -93,10 +90,22 @@ function getRandomCard(){
 
 function checkPlayerMoney(){
     if(player.chips<0.1){
-        let infoMsg = "Get out you dummy... 👋"
-        messageEl.textContent = infoMsg
         player.hasMoney = false
-        player.isAlive = false
+    }else{
+        player.hasMoney = true
     }
 }
+
+function outOfGame(){
+    if(player.chips<0.1){
+        infoMsg = "Get out you dummy... and pay $5 👋"
+    }else if(player.chips === 5){
+        infoMsg = "Get out you dummy... 👋"
+    }else{
+        infoMsg = "You're out of the game... 😖"
+    }
+    player.isAlive = false
+    player.chips -= 5
+}
+
 
